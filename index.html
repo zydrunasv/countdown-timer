@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Countdown Timer</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.min.js"></script>
+</head>
+<body>
+    <div>
+        <label for="datetime">Enter the end time:</label>
+        <input type="datetime-local" id="datetime">
+    </div>
+    <div>
+        <label for="timezone">Select your timezone:</label>
+        <select id="timezone"></select>
+    </div>
+    <button onclick="generateTimer()">Generate Timer</button>
+    <button onclick="copyTimer()">Copy Timer</button>
+    <div id="countdown"></div>
+
+    <script src="script.js"></script>
+</body>
+</html>

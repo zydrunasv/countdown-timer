@@ -4,29 +4,120 @@
     <title>Countdown Timer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
     <style>
+        .time span {
+            color: #202223;
+            font-weight: bold;
+            font-size: 40px;
+            line-height: 1;
+            font-feature-settings: 'tnum';
+            font-variant-numeric: tabular-nums;
+            padding-top: 4px;
+        }
+
+        .time div {
+            color: #6d7175;
+            font-size: 14px;
+            padding-right: 10px;
+            grid-column: 2 span;
+            line-height: 1;
+        }
         #timer {
             display: none;
         }
+        #countdown {
+            display: block;
+        }
+        .time {
+            display: inline-block; 
+            text-align: center; 
+            margin-right: 10px;
+        }
+        #timer {
+            flex-flow: column;
+            background: rgb(255, 255, 255);
+            margin-top: 20px;
+            margin-bottom: 20px;
+            padding-top: 30px;
+            padding-bottom: 30px;
+            border-radius: 8px;
+            border: 0px solid rgb(197, 200, 209);
+            text-align: center;
+            flex: 1 1 auto;
+            align-items: center;
+            cursor: pointer;
+            display: block;
+        }
+
+        #timerTitle {
+            font-weight: bold;
+                font-size: 28px;
+                color: #202223;
+                margin: 0;
+                padding: 0;
+                line-height: 1.2;
+                letter-spacing: normal;
+                text-transform: none;
+            }
+
+            #timerSubheading {
+                font-size: 16px;
+                color: #202223;
+                line-height: 1.2;
+                letter-spacing: normal;
+                padding: 0;
+                padding-top: 2px;
+                margin: 0;
+                font-weight: 500;
+            }
+            
+            #countdown {
+                row-gap: 6px;
+                justify-items: center;
+                align-items: center;
+                column-gap: 5px;
+                direction: ltr;
+                padding-top: 4px;
+            }
+            
+            #timer > #cta_button {
+                display: inline-block;
+                cursor: pointer;
+                text-decoration: none;
+                background: #202223;
+                border: 0;
+                white-space: nowrap;
+                padding: 8px 16px;
+                line-height: 1.5;
+                border-radius: 4px;
+                font-size: 14px;
+                color: #FFFFFF;
+                margin-top: 16px;
+            }
     </style>
 </head>
-<body>
+<body class="container-md" style="padding:30px 0">
     <div>
         <label for="datetime">Enter the end time:</label>
         <input type="datetime-local" id="datetime">
     </div>
+    <br>
     <div>
         <label for="timezone">Select your timezone:</label>
         <select id="timezone"></select>
     </div>
+    <br>
     <div>
         <label for="title">Title:</label>
-        <input type="text" id="title">
+        <input type="text" id="title" value="Hurry up!">
     </div>
+    <br>
     <div>
         <label for="subheading">Subheading:</label>
-        <input type="text" id="subheading">
+        <input type="text" id="subheading" value="Sale ends in:">
     </div>
+    <br>
     <div>
         <label for="cta">Call to Action:</label>
         <select id="cta" onchange="updateCtaFields()">
@@ -35,24 +126,30 @@
             <option value="timer">Make Entire Timer Clickable</option>
         </select>
     </div>
+    <br>
     <div id="cta_text_div" style="display: none;">
         <label for="cta_text">Button Text:</label>
-        <input type="text" id="cta_text">
+        <input type="text" id="cta_text" value="Shop now!">
     </div>
     <div id="cta_link_div" style="display: none;">
         <label for="cta_link">Link:</label>
-        <input type="text" id="cta_link">
+        <input type="text" id="cta_link" value="https://www.google.com/">
+        <div>
+            <br>
+        </div>
     </div>
+    
     <div>
-        <label for="days">Days Label:</label>
-        <input type="text" id="days" value="d">
-        <label for="hours">Hours Label:</label>
-        <input type="text" id="hours" value="h">
-        <label for="minutes">Minutes Label:</label>
-        <input type="text" id="minutes" value="m">
-        <label for="seconds">Seconds Label:</label>
-        <input type="text" id="seconds" value="s">
+        <label for="days_label">Days Label:</label>
+        <input type="text" id="days_label" value="Days"><br>
+        <label for="hours_label">Hours Label:</label>
+        <input type="text" id="hours_label" value="Hrs"><br>
+        <label for="minutes_label">Minutes Label:</label>
+        <input type="text" id="minutes_label" value="Mins"><br>
+        <label for="seconds_label">Seconds Label:</label>
+        <input type="text" id="seconds_label" value="Secs">
     </div>
+    <br>
     <div>
         <label for="end_action">Once it ends:</label>
         <select id="end_action" onchange="updateEndActionFields()">
@@ -61,17 +158,38 @@
             <option value="nothing">Do Nothing</option>
         </select>
     </div>
+    <br>
     <div id="end_text_div" style="display: none;">
-        <label for="end_text">End Text:</label>
+        <label for="end_text">Custom Text:</label>
         <input type="text" id="end_text">
+        <div>
+            <br>
+        </div>
     </div>
-    <button onclick="generateTimer()">Generate Timer</button>
-    <button onclick="copyTimer()">Copy Timer</button>
+    <button class="btn btn-primary" onclick="generateTimer()">Generate Timer</button>
+    <button class="btn btn-primary" onclick="copyTimer()">Copy Timer</button>
 
     <div id="timer" onclick="">
         <h1 id="timerTitle"></h1>
         <h2 id="timerSubheading"></h2>
-        <div id="countdown"></div>
+        <div id="countdown">
+            <div class="time">
+                <span id="days"></span>
+                <div class="label" id="daysLabel"></div>
+            </div>
+            <div class="time">
+                <span id="hours"></span>
+                <div class="label" id="hoursLabel"></div>
+            </div>
+            <div class="time">
+                <span id="minutes"></span>
+                <div class="label" id="minutesLabel"></div>
+            </div>
+            <div class="time">
+                <span id="seconds"></span>
+                <div class="label" id="secondsLabel"></div>
+            </div>
+        </div>
         <button id="cta_button" style="display: none;"></button>
     </div>
     

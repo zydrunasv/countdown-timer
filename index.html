@@ -4,6 +4,11 @@
     <title>Countdown Timer</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment-timezone/0.5.31/moment-timezone-with-data.min.js"></script>
+    <style>
+        #timer {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div>
@@ -14,10 +19,62 @@
         <label for="timezone">Select your timezone:</label>
         <select id="timezone"></select>
     </div>
+    <div>
+        <label for="title">Title:</label>
+        <input type="text" id="title">
+    </div>
+    <div>
+        <label for="subheading">Subheading:</label>
+        <input type="text" id="subheading">
+    </div>
+    <div>
+        <label for="cta">Call to Action:</label>
+        <select id="cta" onchange="updateCtaFields()">
+            <option value="none">No Call to Action</option>
+            <option value="button">Button</option>
+            <option value="timer">Make Entire Timer Clickable</option>
+        </select>
+    </div>
+    <div id="cta_text_div" style="display: none;">
+        <label for="cta_text">Button Text:</label>
+        <input type="text" id="cta_text">
+    </div>
+    <div id="cta_link_div" style="display: none;">
+        <label for="cta_link">Link:</label>
+        <input type="text" id="cta_link">
+    </div>
+    <div>
+        <label for="days">Days Label:</label>
+        <input type="text" id="days" value="d">
+        <label for="hours">Hours Label:</label>
+        <input type="text" id="hours" value="h">
+        <label for="minutes">Minutes Label:</label>
+        <input type="text" id="minutes" value="m">
+        <label for="seconds">Seconds Label:</label>
+        <input type="text" id="seconds" value="s">
+    </div>
+    <div>
+        <label for="end_action">Once it ends:</label>
+        <select id="end_action" onchange="updateEndActionFields()">
+            <option value="unpublish">Unpublish the timer</option>
+            <option value="custom_text">Show Custom Text</option>
+            <option value="nothing">Do Nothing</option>
+        </select>
+    </div>
+    <div id="end_text_div" style="display: none;">
+        <label for="end_text">End Text:</label>
+        <input type="text" id="end_text">
+    </div>
     <button onclick="generateTimer()">Generate Timer</button>
     <button onclick="copyTimer()">Copy Timer</button>
-    <div id="countdown"></div>
 
+    <div id="timer" onclick="">
+        <h1 id="timerTitle"></h1>
+        <h2 id="timerSubheading"></h2>
+        <div id="countdown"></div>
+        <button id="cta_button" style="display: none;"></button>
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>
